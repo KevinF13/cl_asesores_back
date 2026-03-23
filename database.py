@@ -1,14 +1,15 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:F%40rmacid123@192.168.20.3:5432/cl_asesores"
+SQLALCHEMY_DATABASE_URL = "postgresql://cl_asesores_user:h3DaKcTujzEVNRh1G76tAhFAlFxfv7Ba@dpg-d70pko6a2pns739nn480-a.oregon-postgres.render.com:5432/cl_asesores"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
     pool_pre_ping=True,
     pool_recycle=1800,
     pool_size=5,
-    max_overflow=10
+    max_overflow=10,
+    connect_args={"sslmode": "require"}
 )
 
 SessionLocal = sessionmaker(
