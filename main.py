@@ -17,7 +17,7 @@ Base.metadata.create_all(bind=engine)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="API Gestión Comercial - Farmacid S.A.")
+app = FastAPI(title="API Gestión Comercial - Casa Linda")
 
 # Configuración de Seguridad
 SECRET_KEY = "F@rmacid_Secret_2026"
@@ -43,34 +43,34 @@ app.add_middleware(
 class RegistroSchema(BaseModel):
     kpi: str
 
-    # OBLIGATORIOS
-    razon_social: str = Field(...)
-    a_quien_visito: str = Field(...)
-    desarrollo_visita: str = Field(...)
+    # OBLIGATORIOS - con = Field(...)
+    razon_social: str = Field(..., min_length=1)
+    a_quien_visito: str = Field(..., min_length=1)
+    desarrollo_visita: str = Field(..., min_length=1)
 
-    # OPCIONALES
-    nombre_comercial: Optional[str] = ""
-    area: Optional[str] = ""
-    telefono: Optional[str] = ""
-    pendientes: Optional[str] = ""
+    # OPCIONALES - con = None explícito
+    nombre_comercial: Optional[str] = None
+    area: Optional[str] = None
+    telefono: Optional[str] = None
+    pendientes: Optional[str] = None
 
-    # KPIs Numéricos
+    # KPIs Numéricos - con = 0 explícito
     clientes_nuevos: int = 0
     prospectos_new: int = 0
     num_clientes_visitados: int = 0
     llamadas_clientes: int = 0
     llamadas_cobranzas: int = 0
 
-    # KPIs Monetarios
+    # KPIs Monetarios - con = 0.0 explícito
     us_venta: float = 0.0
     us_cobro: float = 0.0
     viajes: float = 0.0
     alimentacion: float = 0.0
 
-    # Tiempo y Planificación
+    # Tiempo
     fecha_ingreso: date_type
     hora_ingreso: str
-    fecha_prox_visita: Optional[str] = ""
+    fecha_prox_visita: Optional[str] = None
 
     @field_validator("razon_social", "a_quien_visito", "desarrollo_visita")
     @classmethod
